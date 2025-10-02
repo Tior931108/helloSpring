@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap');
+
+    .gowun-batang-regular {
+        font-family: "Gowun Batang", serif;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    .navigator {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 0 40px;
+        box-sizing: border-box;
+    }
+
+    .nav-left,
+    .nav-right {
+        display: flex;
+        align-items: center;
+    }
+
+    .nav-menu {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 400;
+        font-size: 20px;
+        text-decoration: none;
+        color: #90a159;
+    }
+</style>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>성주연 소개 페이지</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore-compat.js"></script>
+</head>
+
+<body class="bg-white min-h-screen flex flex-col items-center py-10" style="font-family: 'Noto Sans KR', sans-serif;">
+    <nav class="navigator">
+        <div class="nav-left">
+            <a class="nav-menu" href="mainPage.html">
+                <<< <a>
+        </div>
+        <div class="nav-right">
+            <a class="nav-menu" href="mainPage.html">꒰১♥໒꒱</a>
+        </div>
+    </nav>
+
+    <!-- 🔹 소개 섹션 -->
+    <div class="w-full max-w-3xl mx-auto bg-white rounded-[30px] p-6 mb-8 shadow-md flex items-center space-x-6">
+        <img src="./image/jy.png" class="w-32 h-32 rounded-[50px] object-cover bg-gray-300" alt="주연 프로필">
+        <div>
+            <p class="text-2xl font-bold">성주연</p>
+            <p class="text-base text-gray-600">MBTI: INFJ</p>
+            <p class="text-base text-gray-600">https://cattlejuyawn.tistory.com/</p>
+        </div>
+    </div>
+
+
+    <!-- 🔹 카톡 스타일 Q&A -->
+    <div class="w-full max-w-3xl mx-auto space-y-4 mb-8">
+        <!-- 질문 -->
+        <div class="flex items-center space-x-2">
+            <img src="./image/dd1.png" class="w-[72px] h-[72px] rounded-[28px] object-cover" alt="동이1">
+
+            <div class="relative bg-gray-200 text-base p-4 rounded-xl max-w-[75%] break-words">
+                간단한 자기소개 부탁합니다!
+                <div
+                    class="absolute left-[-8px] bottom-2 w-0 h-0 border-t-8 border-b-8 border-r-8 border-t-transparent border-b-transparent border-r-gray-200">
+                </div>
+            </div>
+        </div>
+        <!-- 답변 -->
+        <div class="flex items-start justify-end space-x-2">
+            <div class="relative bg-gray-200 text-base p-4 rounded-xl max-w-[75%] break-words">
+                안녕하세요. 컴퓨터 관련 학과를 졸업하고, 백엔드 개발자를 목표로 부트캠프에 참여하게 되었습니다. 실생활에 도움이되는
+                게임을 좋아해서 언젠가는 직접 게임을 개발해보고도 싶고, 실생활에 밀접하고 도움이 되는 서비스도 만들고싶어
+                IoT나 자율주행, 로봇 같은 분야에도 도전해보고 싶습니다.
+                기술로 세상을 조금 더 재미있고 편리하게 만드는 게 제 꿈입니다!
+                <div
+                    class="absolute right-[-8px] bottom-2 w-0 h-0 border-t-8 border-b-8 border-l-8 border-t-transparent border-b-transparent border-l-gray-200">
+                </div>
+            </div>
+        </div>
+        <!-- 질문 -->
+        <div class="flex items-center space-x-2">
+            <img src="./image/ss1.png" class="w-[72px] h-[72px] rounded-[28px] object-cover" alt="동이1">
+
+            <div class="relative bg-gray-200 text-base p-4 rounded-xl max-w-[75%] break-words">
+                꽤 긴(?) 자기소개 였습니다. 팀 내에서 어떤 사람이 되고 싶나요?
+                <div
+                    class="absolute left-[-8px] bottom-2 w-0 h-0 border-t-8 border-b-8 border-r-8 border-t-transparent border-b-transparent border-r-gray-200">
+                </div>
+            </div>
+        </div>
+        <!-- 답변 -->
+        <div class="flex items-start justify-end space-x-2">
+            <div class="relative bg-gray-200 text-base p-4 rounded-xl max-w-[75%] break-words">
+                저는 팀에서 ‘신뢰할 수 있는 사람’이 되고 싶고, 꾸준함이 결국 실력을 만든다고 믿어요.
+                그래서 부트캠프에서도 높은 출석률으로 끝까지 프로젝트를 완성하는 걸 목표로 하고 있습니다.
+                <div
+                    class="absolute right-[-8px] bottom-2 w-0 h-0 border-t-8 border-b-8 border-l-8 border-t-transparent border-b-transparent border-l-gray-200">
+                </div>
+            </div>
+        </div>
+        <!-- 질문 -->
+        <div class="flex items-center space-x-2">
+            <img src="./image/dd1.png" class="w-[72px] h-[72px] rounded-[28px] object-cover" alt="동이1">
+
+            <div class="relative bg-gray-200 text-base p-4 rounded-xl max-w-[75%] break-words">
+                본인의 성향이 팀에 어떤 영향을 줄 수 있나요?
+                <div
+                    class="absolute left-[-8px] bottom-2 w-0 h-0 border-t-8 border-b-8 border-r-8 border-t-transparent border-b-transparent border-r-gray-200">
+                </div>
+            </div>
+        </div>
+        <!-- 답변 -->
+        <div class="flex items-start justify-end space-x-2">
+            <div class="relative bg-gray-200 text-base p-4 rounded-xl max-w-[75%] break-words">
+                저는 개인적으로도 계획을 세워 움직이는 스타일이라, 팀 전체 일정이 흐트러지지 않도록 할 수 있어요.
+                이런 점들이 팀의 목표 달성에 긍정적인 영향을 줄 수 있다고 생각해요.
+                <div
+                    class="absolute right-[-8px] bottom-2 w-0 h-0 border-t-8 border-b-8 border-l-8 border-t-transparent border-b-transparent border-l-gray-200">
+                </div>
+            </div>
+        </div>
+        <!-- 질문 -->
+        <div class="flex items-center space-x-2">
+            <img src="./image/ss1.png" class="w-[72px] h-[72px] rounded-[28px] object-cover" alt="동이1">
+
+            <div class="relative bg-gray-200 text-base p-4 rounded-xl max-w-[75%] break-words">
+                마지막으로 고양이 보여주세요.
+                <div
+                    class="absolute left-[-8px] bottom-2 w-0 h-0 border-t-8 border-b-8 border-r-8 border-t-transparent border-b-transparent border-r-gray-200">
+                </div>
+            </div>
+        </div>
+        <!-- 답변 -->
+        <div class="flex items-start justify-end space-x-2">
+            <div class="relative bg-gray-200 text-base p-4 rounded-xl max-w-[75%] break-words">
+                <img src="./image/dd2.jpg" class="w-full max-w-[300px] rounded-lg" alt="동이2">
+                <div
+                    class="absolute right-[-8px] bottom-2 w-0 h-0 border-t-8 border-b-8 border-l-8 border-t-transparent border-b-transparent border-l-gray-200">
+                </div>
+            </div>
+            <div class="relative bg-gray-200 text-base p-4 rounded-xl max-w-[75%] break-words">
+                <img src="./image/ss2.jpg" class="w-full max-w-[330px] rounded-lg" alt="동이2">
+                <div
+                    class="absolute right-[-8px] bottom-2 w-0 h-0 border-t-8 border-b-8 border-l-8 border-t-transparent border-b-transparent border-l-gray-200">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+
+    <!-- 🔹 댓글 기능 -->
+
+    <div class="w-full max-w-3xl mx-auto bg-white shadow-md rounded-[30px] p-6 mb-12 shadow-xl"
+        style="font-family: 'Noto Sans KR', sans-serif;">
+        <h1 class="text-2xl font-bold mb-4">댓글</h1>
+
+        <div class="space-y-2 mb-6">
+            <div class="flex space-x-4">
+                <input type="text" id="username" placeholder="이름" class="w-[45%] border p-2 rounded">
+                <input type="password" id="password" placeholder="비밀번호" class="w-[45%] border p-2 rounded">
+            </div>
+            <textarea id="comment" placeholder="댓글을 입력하세요" class="w-full border p-2 rounded"></textarea>
+            <button onclick="addComment()"
+                class="bg-black text-white px-4 py-2 rounded hover:bg-white hover:text-black border border-black">댓글
+                작성</button>
+        </div>
+
+        <div id="commentList" class="space-y-4"></div>
+    </div>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDXquIb5AipuDGr3BKoc4L34RhOgmpWyDI",
+            authDomain: "sparta-ef49b.firebaseapp.com",
+            projectId: "sparta-ef49b",
+            storageBucket: "sparta-ef49b.firebasestorage.app",
+            messagingSenderId: "653977748093",
+            appId: "1:653977748093:web:5732e5f77381e552b0a714",
+            measurementId: "G-1JZHQSZX1R"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const commentRef = db.collection("comments");
+
+        let editingId = null;
+        let editingPassword = "";
+
+        function renderComments() {
+            commentRef.orderBy("timestamp", "desc").onSnapshot(snapshot => {
+                const list = document.getElementById("commentList");
+                list.innerHTML = "";
+                snapshot.forEach(doc => {
+                    const c = doc.data();
+                    const id = doc.id;
+
+                    if (editingId === id) {
+                        list.innerHTML += `
+              <div class="p-4 border rounded bg-yellow-50">
+                <p><strong>${c.username}</strong></p>
+                <textarea id="editText-${id}" class="w-full border p-2 rounded mt-2">${c.text}</textarea>
+                <div class="flex space-x-2 mt-2">
+                  <button onclick="saveEdit('${id}')" class="text-sm text-green-600">저장</button>
+                  <button onclick="cancelEdit()" class="text-sm text-gray-500">취소</button>
+                </div>
+              </div>
+            `;
+                    } else {
+                        list.innerHTML += `
+              <div class="p-4 border rounded bg-gray-50">
+                <p><strong>${c.username}</strong></p>
+                <p class="mt-2">${c.text}</p>
+                <div class="flex space-x-2 mt-2">
+                  <button onclick="startEdit('${id}', '${c.password}')" class="text-gray-700 hover:text-blue-600">수정</button>
+                  <button onclick="deleteComment('${id}', '${c.password}')" class="text-gray-700 hover:text-red-600">삭제</button>
+                </div>
+              </div>
+            `;
+                    }
+                });
+            });
+        }
+
+        async function addComment() {
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const text = document.getElementById("comment").value.trim();
+
+            if (!username || !password || !text) {
+                alert("이름, 비밀번호, 댓글을 모두 입력하세요!");
+                return;
+            }
+
+            await commentRef.add({
+                username,
+                password,
+                text,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+
+            document.getElementById("username").value = "";
+            document.getElementById("password").value = "";
+            document.getElementById("comment").value = "";
+        }
+
+        function startEdit(id, originalPassword) {
+            const password = prompt("비밀번호를 입력하세요:");
+            if (password === originalPassword) {
+                editingId = id;
+                editingPassword = password;
+                renderComments();
+            } else {
+                alert("비밀번호가 틀렸습니다!");
+            }
+        }
+
+        async function saveEdit(id) {
+            const newText = document.getElementById(`editText-${id}`).value.trim();
+            if (newText) {
+                await commentRef.doc(id).update({ text: newText });
+                editingId = null;
+                editingPassword = "";
+                renderComments();
+            }
+        }
+
+        function cancelEdit() {
+            editingId = null;
+            editingPassword = "";
+            renderComments();
+        }
+
+        async function deleteComment(id, originalPassword) {
+            const password = prompt("비밀번호를 입력하세요:");
+            if (password === originalPassword) {
+                await commentRef.doc(id).delete();
+            } else {
+                alert("비밀번호가 틀렸습니다!");
+            }
+        }
+
+        renderComments();
+    </script>
+</body>
+
+</html>
