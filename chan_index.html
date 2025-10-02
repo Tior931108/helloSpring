@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>진찬의 자기소개</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');
+
+        .main {
+            width: 100vw;
+            height: 100vh;
+
+        }
+
+        .profile_board {
+            display: flex;
+
+            width: 1500px;
+            height: 500px;
+            margin: 100px auto 0px auto;
+        }
+
+        .my_photo {
+            margin: 50px auto 0px 50px;
+        }
+
+        .name {}
+
+        .guestbook {
+            height: 50vh;
+            display: flex;
+            justify-content: center;
+        }
+
+        .guest_cards {
+            margin: 20px 50px 0px 50px;
+            flex-wrap: wrap;
+            min-height: 150px;
+            max-height: 300px;
+        }
+
+        .input-group {
+            width: 1000px;
+            float: right;
+            margin-right: 20px;
+            height: 20px;
+        }
+
+        .guest_cardbody {
+            border: 2px solid black;
+            border-radius: 10px;
+            margin: 5px;
+            width: 300px;
+        }
+
+        .input_guestbtn {
+            margin-left: 10px;
+        }
+
+        .none {
+            display: none;
+        }
+
+        .navigator {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .nav-menu {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            font-size: 16px;
+        }
+
+        .site-name {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            color: #90a159;
+        }
+    </style>
+    <script type="module">
+        // Firebase SDK 라이브러리 가져오기
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { doc, updateDoc, deleteDoc, query, where } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyAgIgGbbxnNSJ-M89uxCHZNrt7Vb2Db9HE",
+            authDomain: "sparta-42ae3.firebaseapp.com",
+            projectId: "sparta-42ae3",
+            storageBucket: "sparta-42ae3.firebasestorage.app",
+            messagingSenderId: "797121303679",
+            appId: "1:797121303679:web:e2efc1af947d805b779b4a",
+            measurementId: "G-7R22563T4D"
+        };
+
+
+        // Firebase 인스턴스 초기화
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let profile_info = await getDocs(collection(db, "profile"));
+        profile_info.forEach((info) => {
+            let row = info.data();
+
+            let photo = row['photo'];
+            let name = row['name'];
+            let introduce = row['introduce'];
+
+            document.getElementById('card_photo').src = photo;
+            $('#card_name').text(name);
+            $('#card_introduce').text(introduce);
+        });
+
+        $("#guest_inputbtn").click(async function () {
+            let name = $('#guest_name').val();
+            let comment = $('#guest_comment').val();
+
+            let doc = {
+                'name': name,
+                'comment': comment,
+            };
+            await addDoc(collection(db, "guestbook"), doc);
+            alert('방명록 업로드 완료');
+            window.location.reload();
+        })
+
+        let docs = await getDocs(collection(db, "guestbook"));
+
+        docs.forEach((doc) => {
+            let row = doc.data();
+
+            let name = row['name'];
+            let comment = row['comment'];
+            let document_name = doc.id;
+            console.log(document_name);
+
+            let temp_html = `
+            <div class="card-body guest_cardbody">
+                <h5 class="card-title">${name}</h5>
+                <p class="card-text">${comment}</p>
+                <button type="button" class="btn btn-danger" id="deletebtn" value=${document_name}>삭제</button>
+            </div>`;
+            $('#guest_cardsbox').append(temp_html);
+        });
+
+        $('#deletebtn').click(async function () {
+            let value = $('#deletebtn').val();
+            console.log(value);
+
+            await deleteDoc(doc(db, value));
+            console.log(value);
+            alert("삭제되었습니다");
+            window.location.reload();
+        })
+    </script>
+</head>
+
+<body>
+    <nav class="navigator">
+        <h5 class="site-name">
+            <a class="nav-menu" href="introduce.html">
+                << </a>
+        </h5>
+        <ul>
+            <li><a class="nav-menu" href="introduce.html">꒰১♥໒꒱</a></li>
+
+        </ul>
+    </nav>
+    <div class="main">
+        <div class="profile_board">
+            <div class="my_photo">
+                <div class="card mb-3" style="max-width: 700px;">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="" class="img-fluid rounded-start" id="card_photo" alt="...">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title" id="card_name"></h5>
+                                <p class="card-text" id="card_introduce"></p>
+                                <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="guestbook">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Username" aria-label="Username" id="guest_name">
+                <span class="input-group-text">댓글</span>
+                <input type="text" class="form-control" placeholder="comment" aria-label="Comment" id="guest_comment">
+                <div class="text-end"> <span class="input_guestbtn" id="guest_inputbtn"><button type="button"
+                            class="btn btn-warning">입력</button></span>
+                </div>
+                <div class="card guest_cards" id="guest_cardsbox">
+                    <div class="card-body guest_cardbody">
+                        <h5 class="card-title">게스트 1</h5>
+                        <p class="card-text">대충 방명록처럼 작성함</p>
+                    </div>
+                    <div class="card-body guest_cardbody">
+                        <h5 class="card-title">게스트 2</h5>
+                        <p class="card-text">대충 방명록처럼 작성함</p>
+                    </div>
+                    <div class="card-body guest_cardbody">
+                        <h5 class="card-title">게스트 3</h5>
+                        <p class="card-text">대충 방명록처럼
+                            작성함ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+                        </p>
+                    </div>
+                    <div class="card-body guest_cardbody">
+                        <h5 class="card-title">게스트 4</h5>
+                        <p class="card-text">대충 방명록처럼 작성함</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+
+</html>
