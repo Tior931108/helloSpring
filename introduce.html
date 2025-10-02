@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>임정하</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script type="module">
+        // Firebase SDK 라이브러리 가져오기
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+        import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyCx-tIQVQmuzZO4-3kmpD1HBp5kJeFoYuU",
+            authDomain: "sparta-a682e.firebaseapp.com",
+            projectId: "sparta-a682e",
+            storageBucket: "sparta-a682e.firebasestorage.app",
+            messagingSenderId: "368420457",
+            appId: "1:368420457:web:a6aa32def2decb365664f8",
+            measurementId: "G-L9WTZ5Y6XK"
+        };
+
+
+        // Firebase 인스턴스 초기화
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        $("#Sendbtn").click(async function () {
+            let name = $('#NameInput').val();
+            let message = $('#MessageInput').val();
+
+            let doc = {
+                'name': name,
+                'message': message,
+                'timestamp': new Date()
+            };
+
+            if (!name || !message) {
+                alert("이름과 메세지를 모두 입력해주세요.");
+                return;
+            }
+
+            try {
+                await addDoc(collection(db, "message"), doc);
+                alert("저장 완료!");
+                window.location.reload();
+            } catch (error) {
+                console.error("Error adding document: ", error);
+                alert("저장 실패. 콘솔을 확인해주세요.");
+            }
+        })
+
+        $("#postingbtn").click(async function () {
+            $('#gb').toggle();
+        })
+
+        let docs = await getDocs(collection(db, 'message'));
+        docs.forEach((doc) => {
+            let row = doc.data();
+            let name = row['name'];
+            let message = row['message'];
+
+            let temp_html =
+                `<div class="input-group mb-3">
+                    <span class="input-group-text guestbook-label"><b>${name}</b></span>
+                    <input type="text" class="form-control" value="${message}" readonly>
+                </div>`;
+
+            $('#guestbookList').append(temp_html);
+        });
+
+
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Chiron+GoRound+TC:wght@200..900&family=Gowun+Dodum&family=IBM+Plex+Sans+KR&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+        body {
+            background-color: #ededed;
+        }
+
+        .frame {
+            margin: 30px auto;
+            max-width: 1200px; /* 최대 너비 설정 (원하는 값으로 조절) */
+            padding: 0 50px; /* 좌우 패딩을 추가하여 내용이 가장자리까지 붙는 것 방지 */
+
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        /*navigator*/
+
+        .navigator {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        li {
+            display: inline;
+            align-self: center;
+            margin: 0;
+            margin-left: 15px;
+        }
+
+        ul {
+            margin: 0;
+        }
+
+        .site-name {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            color: #90a159;
+        }
+
+        .nav-menu {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            font-size: 16px;
+        }
+
+        a {
+            color: #90a159;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: white;
+            transition: 0.3s;
+        }
+
+
+        /*font*/
+
+        .korean-comment {
+            font-family: "IBM Plex Sans KR", sans-serif;
+            font-weight: 500;
+            font-size: 50px;
+        }
+
+        .english-comment {
+            font-family: 'Noto Sans KR', sans-serif;
+            font-weight: 100;
+            font-size: 15px;
+            font-style: italic;
+
+            letter-spacing: -0.3px;
+        }
+
+
+
+
+
+
+        /* INFO Section*/
+
+
+        /*profile-section*/
+
+        .profile-section {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            margin-top: 50px;
+            margin-bottom: 25px;
+        }
+
+
+        #profile-picture {
+            border-radius: 10%;
+            width: 250px;
+            margin-right: 25px;
+        }
+
+        .introduction>h2 {
+            margin-bottom: 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 35px;
+        }
+
+        .introduction>p {
+            font-family: "IBM Plex Sans KR", sans-serif;
+            font-weight: 300;
+            font-size: 20px;
+
+            margin-bottom: 25px;
+        }
+
+        #capability {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            font-size: 20px;
+            font-style: italic;
+
+            line-height: 20px;
+        }
+
+        .action-button {
+            background-color: #90a159;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 15px;
+            margin-left: 5px;
+            transition: background-color 0.3s;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .action-button:hover {
+            background-color: #7d8f4d;
+        }
+
+        .introduction p.button-container-in-p {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            margin-bottom: 25px;
+
+        }
+
+        .update-button {
+            /* 버튼을 오른쪽 끝으로 밀어내고 아래쪽에 배치합니다. */
+            align-self: flex-end;
+            margin-top: 55px;
+
+
+            background-color: #90a159;
+            color: white;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+            padding: 8px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
+        }
+
+        .update-button:hover {
+            background-color: #a0b169;
+        }
+
+
+
+        /* 링크박스 */
+        .link-box {
+            display: flex;
+            border: 2px solid gray;
+            width: 100%;
+            margin-bottom: 25px;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .link-box a {
+            flex: 1;
+            padding: 12px;
+            text-decoration: underline;
+            color: gray;
+            border-right: 2px solid gray;
+        }
+
+        .link-box a:last-child {
+            border-right: none;
+        }
+
+        .link-box a:hover {
+            color: black;
+            background-color: #90a159;
+            /* hover 시 배경 강조 */
+        }
+
+        /* 도마뱀사진 */
+        .gallery1 {
+            display: flex;
+            gap: 15px;
+            /* 사진 사이 간격 */
+            justify-content: center;
+            /* 가운데 정렬 */
+            margin-bottom: 50px;
+            /* 이미지가 넘치면 다음 줄로 자동 줄바꿈 */
+            flex-wrap: wrap;
+        }
+
+        .gallery1 img {
+            flex-basis: 200px;
+            max-width: calc(20% - 12px);
+
+            height: 180px object-fit;
+            /* 비율 맞추려면 object-fit 사용 */
+            object-fit: cover;
+            /* 이미지 잘림 방지 + 꽉 채움 */
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 취미 사진 */
+        .gallery2 {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 200px;
+            flex-wrap: wrap;
+        }
+
+        .gallery2 img {
+            flex-basis: 200px;
+            max-width: calc(20% - 12px);
+
+            height: 180px object-fit;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .mypostingbox {
+            background-color: #e1e3e1;
+            width: 100%;
+            border: 2px solid gray;
+            padding: 20px;
+            margin-bottom: 100px;
+        }
+
+
+        /* button-container 클래스를 추가합니다 */
+        .button-container {
+            display: flex;
+            /* Flexbox 활성화 */
+            justify-content: flex-end;
+            /* 내용을 오른쪽으로 정렬 */
+            margin-bottom: 10px;
+            /* 위쪽 여백 추가 (선택 사항) */
+        }
+
+        /* 방명록 목록의 이름 레이블 스타일 */
+        .guestbook-label {
+            background-color: #90a159;
+            color: white;
+
+
+            /* 너비 통일 CSS 유지 */
+            min-width: 100px;
+            text-align: center;
+            justify-content: center;
+            /* border-color: #90a159; */
+            /* 테두리 색상도 통일 */
+        }
+
+        /* 방명록 입력 박스의 레이블 스타일 (Name, Message) */
+        .mypostingbox .input-group-text {
+            font-family: "IBM Plex Sans KR", sans-serif;
+            font-weight: 50;
+            min-width: 100px;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .form-control {
+            background-color: white !important;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;0,500;0,600;0,800;0,900;1,200;1,400;1,500;1,600;1,800;1,900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="frame">
+
+        <nav class="navigator">
+            <h5 class="site-name">
+                <a class="nav-menu" href="introduce.html">
+                    << </a>
+            </h5>
+            <ul>
+                <li><a class="nav-menu" href="introduce.html">꒰১♥໒꒱</a></li>
+
+            </ul>
+        </nav>
+
+        <!-- 사진과 개인정보 -->
+        <div class="profile-section">
+            <img id="profile-picture" src="images/프로필사진.jpg">
+            <div class="introduction">
+                <h2>JEONGHA IM</h2>
+                <p class="button-container-in-p">
+                    이름 : 임정하<br>
+                    전공 : 정보통계학과<br>
+                    MBTI : ESFP<br>
+                    취미 : 뜨개질, 요리, 여행, 중국어 공부<br>
+                    장점 : 빠른 실행력, 꼼꼼함, 밝은 성격<br>
+                </p>
+                <a href="#guestbook-section" style="text-decoration: none;">
+                    <button id="btn" class="update-button">Guest Book</button>
+                </a>
+            </div>
+        </div class="profile-section">
+
+        <!-- 링크박스 -->
+        <div class="link-box">
+            <a href="https://velog.io/@imjh3205/posts" target="_blank">velog</a>
+            <a href="https://github.com/JH319" target="_blank">github</a>
+            <a href="https://blog.naver.com/imjh__" target="_blank">blog</a>
+        </div>
+
+        <!-- 도마뱀 소개 -->
+        <div class="introduction">
+            <h2>My lizard</h2>
+            <p> 저는 크리스티드 게코 도마뱀 두 마리를 기르고 있습니다.
+                <br> 노란색 도마뱀 미원이는 암컷이고, 주황색 도마뱀 계피는 수컷입니다! 미원이는 달달한 과일을 좋아하고 계피는 고소한 곤충을 좋아합니다.
+                <br>사실 둘이 사이가 그렇게 좋진 않아서 데면데면한 사이입니다ㅎㅎ
+            </p>
+            <div class="gallery1">
+                <img src="images/미원1.JPG" alt="mi">
+                <img src="images/미원2.JPG" alt="ge">
+                <img src="images/계피1.JPG" alt="mi">
+                <img src="images/계피2.JPG" alt="ge">
+                <img src="images/미원_계피.JPG"alt="to">
+            </div>
+        </div>
+
+        <!-- 취미 소개 -->
+        <div class="introduction">
+            <h2>My hobby</h2>
+            <p> 저의 취미들을 소개합니다.<br> 첫 번째 취미는 뜨개질입니다. 사진에서 보이는 가방이 제가 만든 모티브백인데요, 모티브 27개를 만들어 이어 붙어야 합니다. 너무 힘들었던 경험이라 모티브백은 다시 안 만들 것 같습니다ㅎㅎ
+                <br> 두 번째 취미는 요리입니다. 사진은 제가 만든 마제소바와 스테이크입니다. 맛집에 가는 걸 좋아하고 새로운 음식이 있으면 꼭 시도해봅니다!
+                <br> 세 번째 취미는 여행입니다. 사진은 올해 1월 1일 대만에서 교환학생 때 만난 친구들과 신년을 맞이한 사진입니다. 교환학생 시절에는 타이베이101을 자주 봐서 감흥이 없었는데 저렇게 폭죽을 터트리니
+                너무 아름다웠습니다! 그리고 캠프 시작 전에 혼자 후쿠오카여행을 다녀왔는데 너무 좋았습니다! 연말엔 어디갈지 고민중입니다...
+            </p>
+            <div class="gallery2">
+                <img src="images/가방.JPG" alt="ga">
+                <img src="images/마제소바.JPG" alt="go">
+                <img src="images/스테이크.jpg" alt="go">
+                <img src="images/대만.JPG" alt="tw">
+                <img src="images/후쿠오카.JPG" alt="tw">
+            </div>
+        </div>
+
+
+        <!-- 방명록 -->
+        <div class="introduction" id="guestbook-section">
+            <h2>Guest Book</h2>
+        </div>
+
+        <div class="mypostingbox" id="postingbox">
+            <div id="gb" style="display: none;">
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Name</span>
+                    <input id="NameInput" type="text" class="form-control">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Message</span>
+                    <input id="MessageInput" type="text" class="form-control">
+                </div>
+            </div>
+            <div>
+                <div class="button-container">
+                    <button id="postingbtn" class="action-button">Post</button>
+                    <button id="Sendbtn" class="action-button">Send</button>
+                </div>
+                <!-- 메시지가 표시될 영역 -->
+                <div id="guestbookList"></div>
+            </div>
+        </div>
+    </div>
+
+</body>
